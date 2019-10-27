@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    </head>
+    <body>
+      <div style="text-align:center;">
+        <br><br><br>
+        <h1>Find by ingredients</h1><br><br>
+        Ingredient: <input type="text" id="food"><button type="button" class="btn btn-primary" onclick="addToCart()">Add</button><br>
+        
+      </div>
+      <div style="display:none;position: absolute;bottom:0;right:0;z-index: 9;" id="myForm">
+          <ul class="list-group" id = "food_list">
+            <li class="list-group-item" id="First">First<button type="button" class="btn btn-primary"  onclick="delFromCart('First')">Delete</button></li>
+            <li class="list-group-item" id="Second">Second<button type="button" class="btn btn-primary"  onclick="delFromCart('Second')">Delete</button></li>
+            <li class="list-group-item" id="Third">Third<button type="button" class="btn btn-primary"  onclick="delFromCart('Third')">Delete</button></li>
+          </ul><br>
+          <button type="button" class="btn btn-primary" onClick="location.href='srchResult.html'">Search</button>
+          <button type="button" style="position: absolute;bottom:0;right:0;"class="btn btn-secondary" onclick="closePopup()">Close</button>
+        </div>
+      <div style="position: absolute;bottom:0;right:0;" >
+
+        <button type="button" class="btn btn-secondary" onclick="openPopup()">Cart</button>
+        <script>
+        // When the user clicks on <div>, open the popup
+        function openPopup() {
+          document.getElementById("myForm").style.display = "block";
+        }
+        function closePopup(){
+          document.getElementById("myForm").style.display = "none";
+        }
+        function addToCart(){
+          var food = document.getElementById("food").value;
+          console.log(food);
+          $("#food_list").prepend("<li class='list-group-item' id='"+food+"'>"+food+"<button type='button' class='btn btn-primary'  onclick=delFromCart('"+food+"')>Delete</button></li>");
+
+        }
+        function delFromCart(food){
+          console.log("#"+food);
+          $("#"+food).remove();
+        }
+        </script>
+      </div>
+    </body>
+</html>
