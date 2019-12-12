@@ -21,7 +21,8 @@ var apigClient = apigClientFactory.newClient({
     apiKey:'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
 });
 var params = {};
-var body = {"UserID": "1"};
+var body = {"UserID": cognitoUser.username};
+console.log(cognitoUser.username);
 var additionalParams = {};
 apigClient.finduserhostingeventsPost(params, body, additionalParams)
 .then (function(result) {
