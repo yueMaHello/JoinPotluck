@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/aws-cognito-sdk.min.js"></script>
+    <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
+    <script src="../js/showEvents.js"></script>
+    <!-- ApiGateway -->
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/CryptoJS/rollups/sha256.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/CryptoJS/components/hmac.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/CryptoJS/components/enc-base64.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/url-template/url-template.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/sigV4Client.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/apiGatewayClient.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
+    <script type="text/javascript" src="../js/apiGateway-js-sdk/apigClient.js"></script>
+</head>
+<body>
+    <div class="row">
+	  <div class="col-3">
+	    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+	      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Find an recipe</a>
+	      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Join an Event</a>
+	      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Host an Event</a>
+	      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">My Events</a>
+	      <a class="nav-link" id="v-pills-account-tab" data-toggle="pill" href="#v-pills-account" role="tab" aria-controls="v-pills-account" aria-selected="false">My Account</a>
+	    </div>
+	  </div>
+	  <div class="col-9">
+	    <div class="tab-content" id="v-pills-tabContent">
+	      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+	      	<div class="container">
+		      	<div style="text-align:center;">
+		          <br><br><br>
+		          <h1>Find by ingredients</h1><br><br>
+		          Ingredient: <input type="text" id="food"><button type="button" class="btn btn-primary" onclick="addToCart()">Add</button><br>
+		        </div>
+		        <div style="z-index: 9;" id="myForm">
+		            <ul class="list-group" id = "food_list">
+		              <li class="list-group-item" id="First">First<button type="button" class="btn btn-primary"  onclick="delFromCart('First')">Delete</button></li>
+		              <li class="list-group-item" id="Second">Second<button type="button" class="btn btn-primary"  onclick="delFromCart('Second')">Delete</button></li>
+		              <li class="list-group-item" id="Third">Third<button type="button" class="btn btn-primary"  onclick="delFromCart('Third')">Delete</button></li>
+		            </ul><br>
+		            <button type="button" class="btn btn-primary" onClick="location.href='#srchResult'">Search</button>
+		            <button type="button" class="btn btn-secondary" onclick="closePopup()">Close</button>
+		          </div>
+		        <div>
+		          <button type="button" class="btn btn-secondary" onclick="openPopup()">Cart</button>
+		          <script>
+		          // When the user clicks on <div>, open the popup
+		          function openPopup() {
+		            document.getElementById("myForm").style.display = "block";
+		          }
+		          function closePopup(){
+		            document.getElementById("myForm").style.display = "none";
+		          }
+		          function addToCart(){
+		            var food = document.getElementById("food").value;
+		            console.log(food);
+		            $("#food_list").prepend("<li class='list-group-item' id='"+food+"'>"+food+"<button type='button' class='btn btn-primary'  onclick=delFromCart('"+food+"')>Delete</button></li>");
+
+		          }
+		          function delFromCart(food){
+		            console.log("#"+food);
+		            $("#"+food).remove();
+		          }
+		          </script>
+		        </div>
+		        <div class="container" id="srchResult">
+			      <div>
+			        <br><br><br><h2>Search Result for using food: </h2><br>
+			      </div>
+			      <div style="text-align:center;">
+			        <ul class="list-group" id = "recipe_list">
+			            <li class="list-group-item">First recipe</li>
+			            <li class="list-group-item">Second recipe</li>
+			            <li class="list-group-item">Third recipe</li>
+			          </ul><br>
+			      </div>
+			    </div>
+		    </div>
+	      </div>
+
+
+
+
+
+
+	      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+	      	<div id="map" style="height:800px;width:500px;"></div>
+	        <script async defer
+	            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w&callback=initMap">
+	        </script>
+            <script>
+        	// Initialize and add the map
+		        function initMap() {
+		          var center = {lat: 40, lng: -74};
+		          // The map, centered at Uluru
+		          var map = new google.maps.Map(
+		              document.getElementById('map'), {zoom: 13, center: center});
+		          var theUrl = 'https://a3muoq7rvj.execute-api.us-east-1.amazonaws.com/testcak/getallevents';
+		          var xmlHttp = new XMLHttpRequest();
+		          xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+		          xmlHttp.send( null );
+		          var response = JSON.parse(xmlHttp.responseText);
+		          for (var i = 0; i < response.length; i++) {
+		            
+		            var addr = 'https://maps.googleapis.com/maps/api/geocode/json?address='+response[i]['Address']['S']+'&key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w';
+		            var addrHttp = new XMLHttpRequest();
+		            addrHttp.open( "GET", addr, false ); // false for synchronous request
+		            addrHttp.send( null );
+		            var addrResponse = JSON.parse(addrHttp.responseText);
+		            var latLng = new google.maps.LatLng(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
+		            console.log(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
+		            var marker = new google.maps.Marker({position: latLng, map: map});
+		            map.setCenter(marker.getPosition());
+
+		            var contentString = '<div id="content">'+'<h2>'+response[i]['EventName']['S']+'</h2>Time: '+response[i]['Time']['S']+'<br>Address: '+response[i]['Address']['S']+'<br>Host ID: '+response[i]['HosterID']['S']+'<br><button type="button" class="btn btn-primary" id="joinEvent" style="margin-top:30px; margin-right:10px; float:right">Join Selected Event</button></div>';
+		            var infoWindow = new google.maps.InfoWindow();
+
+		            google.maps.event.addListener(marker,'click', (function(marker,contentString,infoWindow){ 
+		                return function() {
+		                    infoWindow.setContent(contentString);
+		                    infoWindow.open(map,marker);
+		                };
+		            })(marker,contentString,infoWindow)); 
+		          }      
+		        }
+            </script>
+	      </div>
+
+	      	<div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+		      	<div class="container">
+			        <div class="row justify-content-end">
+			            <div class="col-1">
+			                <button type="button" class="btn btn-primary" onClick="location.href='./upcomingEvent.html'">Events</button>
+			            </div>
+			        </div>
+			        <div class="row">
+			            <div class="col">
+			                <h1>Create your Events <span class="badge badge-success">New</span></h1>
+			            </div>
+			        </div>
+			        <div class="row">
+			            <div class="col">
+			                <form>
+			                    <div class="form-group">
+			                        <label for="exampleInputEmail1">Theme</label>
+			                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Theme">
+			                        <small id="emailHelp" class="form-text text-muted">Enter a Theme to attracts others !!</small>
+			                    </div>
+			                    <div class="form-group">
+			                        <label for="exampleInputPassword1">Time</label>
+			                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Time">
+			                        <small id="emailHelp" class="form-text text-muted">Specify a time !!</small>
+			                    </div>
+			                    <div class="form-group">
+			                        <label for="exampleInputEmail1">Location</label>
+			                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Location">
+			                        <small id="emailHelp" class="form-text text-muted">Specify a location !!</small>
+			                    </div>
+			                </form>
+			            </div>
+			        </div>
+			        <div class="row">
+			            <div class="col-auto mr-auto">
+			                <button type="button" class="btn btn-primary">Private</button>
+			            </div>
+			            <div class="col-auto mr-auto">
+			                <button type="button" class="btn btn-success">Public</button>
+			            </div>
+			        </div>
+			        <div class="row">
+			            <div class="col">
+			                <button type="submit" class="btn btn-primary">Create</button>
+			            </div>
+			        </div>
+			    </div>
+	      	</div>
+
+
+	      	<div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+		    	<div class="container">
+			        <div class="row justify-content-end">
+			            <div class="col-1">
+			                <button type="button" class="btn btn-primary">Events</button>
+			            </div>
+			        </div>
+			        <div class="row">
+			            <div class="col">
+			                <h1>Upcoming Events <span class="badge badge-primary">Upcoming</span></h1>
+			            </div>
+			        </div>
+			        <div class="row" id="row1">
+			            <div class="col">
+			                <div class="card" style="width: 18rem;">
+			                  <div class="card-body">
+			                    <h5 class="card-title">Theme 1</h5>
+			                    <p class="card-text">Location</p>
+			                    <p class="card-text">Time</p>
+			                    <p class="card-text">Num of People</p>
+			                    <a href="#" class="btn btn-success">Withdraw</a>
+			                  </div>
+			                </div>
+			            </div>
+			            
+			        </div>
+			        <div class="row">
+			            <div class="col">
+			                <div class="card" style="width: 18rem;">
+			                  <div class="card-body">
+			                    <h5 class="card-title">Theme 1</h5>
+			                    <p class="card-text">Location</p>
+			                    <p class="card-text">Time</p>
+			                    <p class="card-text">Num of People</p>
+			                    <a href="#" class="btn btn-success">Withdraw</a>
+			                  </div>
+			                </div>
+			            </div>
+			            
+			        </div>  
+    			</div>
+		    </div>
+
+	      	<div class="tab-pane fade" id="v-pills-account" role="tabpanel" aria-labelledby="v-pills-account-tab">...</div>
+
+	    </div>
+	  </div>
+	</div>
+
+
+
+
+
+        
+    
+
+
+    
+</body>
+</html>

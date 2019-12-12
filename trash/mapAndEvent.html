@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="mapAndEvent.css">
+
+    <title>Hello, world!</title>
+    <style>
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
+    </style>
+    </head>
+    <body>
+    <h1  align="center">Available Public Potluck</h1>
+    <div class="container-fluid" style="margin-top:50px;">
+      <div class="row" style="height:800px;margin-left:50px;margin-right:50px;">
+        <div id="map"></div>
+          <script>
+        // Initialize and add the map
+        function initMap() {
+          var center = {lat: 40, lng: -74};
+          // The map, centered at Uluru
+          var map = new google.maps.Map(
+              document.getElementById('map'), {zoom: 13, center: center});
+          var theUrl = 'https://a3muoq7rvj.execute-api.us-east-1.amazonaws.com/testcak/getallevents';
+          var xmlHttp = new XMLHttpRequest();
+          xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+          xmlHttp.send( null );
+          var response = JSON.parse(xmlHttp.responseText);
+          for (var i = 0; i < response.length; i++) {
+            
+            var addr = 'https://maps.googleapis.com/maps/api/geocode/json?address='+response[i]['Address']['S']+'&key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w';
+            var addrHttp = new XMLHttpRequest();
+            addrHttp.open( "GET", addr, false ); // false for synchronous request
+            addrHttp.send( null );
+            var addrResponse = JSON.parse(addrHttp.responseText);
+            var latLng = new google.maps.LatLng(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
+            console.log(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
+            var marker = new google.maps.Marker({position: latLng, map: map});
+            map.setCenter(marker.getPosition());
+
+            var contentString = '<div id="content">'+'<h2>'+response[i]['EventName']['S']+'</h2>Time: '+response[i]['Time']['S']+'<br>Address: '+response[i]['Address']['S']+'<br>Host ID: '+response[i]['HosterID']['S']+'<br><button type="button" class="btn btn-primary" id="joinEvent" style="margin-top:30px; margin-right:10px; float:right">Join Selected Event</button></div>';
+            var infoWindow = new google.maps.InfoWindow();
+
+            google.maps.event.addListener(marker,'click', (function(marker,contentString,infoWindow){ 
+                return function() {
+                    infoWindow.setContent(contentString);
+                    infoWindow.open(map,marker);
+                };
+            })(marker,contentString,infoWindow)); 
+          }
+          
+        }
+            </script>
+            <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w&callback=initMap">
+            </script>
+<!--             <script type="text/javascript">
+              function request() {
+                var theUrl = 'https://a3muoq7rvj.execute-api.us-east-1.amazonaws.com/testcak/getallevents';
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
+                xmlHttp.send( null );
+                var response = JSON.parse(xmlHttp.responseText);
+                console.log(xmlHttp.responseText);
+                for (var i = 0; i < response.length; i++) {
+                  var addr = 'https://maps.googleapis.com/maps/api/geocode/json?address='+response[i]['Address']['S']+'&key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w';
+                  var addrHttp = new XMLHttpRequest();
+                  addrHttp.open( "GET", addr, false ); // false for synchronous request
+                  addrHttp.send( null );
+                  var addrResponse = JSON.parse(addrHttp.responseText);
+                  console.log(addrResponse['results'][0]['geometry']['location']['lat']);
+                }
+              }
+            </script>
+            <button type="button" class="btn btn-primary" onClick="request()">request</button>
+ -->
+        </div>
+    </div>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    </body>
+</html>
+

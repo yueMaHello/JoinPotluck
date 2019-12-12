@@ -1,0 +1,18 @@
+.logincontainer {
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 10%;
+	height: 300;
+	width: 100;
+	background-color: white;
+	text-align: left;
+	padding: 15px;
+}
+
+.background {
+	background: url('../img/bg.png') no-repeat center center fixed; 
+  	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
+}
