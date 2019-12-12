@@ -60,6 +60,7 @@ function signUpUser(email, name, phone, password, callback) {
         } else {
             cognitoUser = result.user;
             callback(null, result);
+            actionConfirmUser();
         }
     });
 }
