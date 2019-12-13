@@ -16,6 +16,13 @@
     <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
     <script src="../js/showEvents.js"></script>
+    <script src="../js/initMap.js"></script>
+    <!-- Bootstrap's JavaScript dependencies -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
     <!-- ApiGateway -->
     <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/axios/dist/axios.standalone.js"></script>
     <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/CryptoJS/rollups/hmac-sha256.js"></script>
@@ -103,51 +110,12 @@
 	      </div>
 
 
-
-
-
 	      <!-- Join an Event (Map) -->
 	      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-	      	<div id="map" style="height:800px;width:500px;"></div>
+	      	<div id="map" style="height:800px;width:1100px;"></div>
 	        <script async defer
 	            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w&callback=initMap">
 	        </script>
-            <script>
-        	// Initialize and add the map
-		        function initMap() {
-		          var center = {lat: 40, lng: -74};
-		          // The map, centered at Uluru
-		          var map = new google.maps.Map(
-		              document.getElementById('map'), {zoom: 13, center: center});
-		          var theUrl = 'https://a3muoq7rvj.execute-api.us-east-1.amazonaws.com/testcak/getallevents';
-		          var xmlHttp = new XMLHttpRequest();
-		          xmlHttp.open( "POST", theUrl, false ); // false for synchronous request
-		          xmlHttp.send( null );
-		          var response = JSON.parse(xmlHttp.responseText);
-		          for (var i = 0; i < response.length; i++) {
-		            
-		            var addr = 'https://maps.googleapis.com/maps/api/geocode/json?address='+response[i]['Address']['S']+'&key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w';
-		            var addrHttp = new XMLHttpRequest();
-		            addrHttp.open( "GET", addr, false ); // false for synchronous request
-		            addrHttp.send( null );
-		            var addrResponse = JSON.parse(addrHttp.responseText);
-		            var latLng = new google.maps.LatLng(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
-		            console.log(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
-		            var marker = new google.maps.Marker({position: latLng, map: map});
-		            map.setCenter(marker.getPosition());
-
-		            var contentString = '<div id="content">'+'<h2>'+response[i]['EventName']['S']+'</h2>Time: '+response[i]['Time']['S']+'<br>Address: '+response[i]['Address']['S']+'<br>Host ID: '+response[i]['HosterID']['S']+'<br><button type="button" class="btn btn-primary" id="joinEvent" style="margin-top:30px; margin-right:10px; float:right">Join Selected Event</button></div>';
-		            var infoWindow = new google.maps.InfoWindow();
-
-		            google.maps.event.addListener(marker,'click', (function(marker,contentString,infoWindow){ 
-		                return function() {
-		                    infoWindow.setContent(contentString);
-		                    infoWindow.open(map,marker);
-		                };
-		            })(marker,contentString,infoWindow)); 
-		          }      
-		        }
-            </script>
 	      </div>
 	      <!-- Host an Event -->
 	      	<div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
