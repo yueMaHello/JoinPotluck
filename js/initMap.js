@@ -23,14 +23,9 @@ function initMap() {
       var data = response['data'];
       var windows = [];
       for (var i = 0; i < data.length; i++) {
-    
-        var addr = 'https://maps.googleapis.com/maps/api/geocode/json?address='+data[i]['Address']['S']+'&key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w';
-        var addrHttp = new XMLHttpRequest();
-        addrHttp.open( "GET", addr, false ); // false for synchronous request
-        addrHttp.send( null );
-        var addrResponse = JSON.parse(addrHttp.responseText);
-        var latLng = new google.maps.LatLng(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
-        // console.log(addrResponse['results'][0]['geometry']['location']['lat'],addrResponse['results'][0]['geometry']['location']['lng']);
+
+        var latLng = new google.maps.LatLng(data[i]['Lat']['N'], data[i]['Long']['N']);
+
         var marker = new google.maps.Marker({position: latLng, map: map});
 
         map.setCenter(marker.getPosition());

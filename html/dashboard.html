@@ -16,6 +16,7 @@
     <script src="https://rawgit.com/aws/amazon-cognito-identity-js/master/dist/amazon-cognito-identity.min.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.6.10.min.js"></script>
     <script src="../js/showEvents.js"></script>
+    <script src="../js/addEvent.js"></script>
     <script src="../js/initMap.js"></script>
     <!-- Bootstrap's JavaScript dependencies -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -35,8 +36,9 @@
     <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/simpleHttpClient.js"></script>
     <script type="text/javascript" src="../js/apiGateway-js-sdk/lib/apiGatewayCore/utils.js"></script>
     <script type="text/javascript" src="../js/apiGateway-js-sdk/apigClient.js"></script>
+    <link rel="stylesheet" href="../css/index.css">
 </head>
-<body>
+<body class="background">
     <div class="row">
 	  <div class="col-3">
 	    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -48,12 +50,7 @@
 	    </div>
 	  </div>
 	  <div class="col-9">
-	    <div class="tab-content" id="v-pills-tabContent">
-
-
-
-
-
+	    <div class="tab-content" style="background-color: white;" id="v-pills-tabContent">
 
 	    	<!-- Find an recipe -->
 	      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -112,7 +109,7 @@
 
 	      <!-- Join an Event (Map) -->
 	      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-	      	<div id="map" style="height:800px;width:1100px;"></div>
+	      	<div id="map" style="height:850px;width:1080px;"></div>
 	        <script async defer
 	            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXM-hS25ZNYn0lwafz5Pd8pM38BqTJc-w&callback=initMap">
 	        </script>
@@ -122,7 +119,7 @@
 		      	<div class="container">
 			        <div class="row justify-content-end">
 			            <div class="col-1">
-			                <button type="button" class="btn btn-primary" onClick="location.href='./upcomingEvent.html'">Events</button>
+			            	<br>
 			            </div>
 			        </div>
 			        <div class="row">
@@ -135,35 +132,55 @@
 			                <form>
 			                    <div class="form-group">
 			                        <label for="exampleInputEmail1">Theme</label>
-			                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Theme">
+			                        <input type="text" class="form-control" id="theme" aria-describedby="emailHelp" placeholder="Theme">
 			                        <small id="emailHelp" class="form-text text-muted">Enter a Theme to attracts others !!</small>
 			                    </div>
 			                    <div class="form-group">
 			                        <label for="exampleInputPassword1">Time</label>
-			                        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Time">
+			                        <input type="text" class="form-control" id="time" placeholder="Time">
 			                        <small id="emailHelp" class="form-text text-muted">Specify a time !!</small>
 			                    </div>
 			                    <div class="form-group">
 			                        <label for="exampleInputEmail1">Location</label>
-			                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Location">
+			                        <input type="text" class="form-control" id="location" aria-describedby="emailHelp" placeholder="Location">
 			                        <small id="emailHelp" class="form-text text-muted">Specify a location !!</small>
 			                    </div>
+			                    <div class="row">
+			                    	<div class="col">
+										<label><input name="publicOrNot" type="radio" value="false"> Private</label><br>
+										<label><input name="publicOrNot" type="radio" value="true">	Public</label>
+									</div>
+						        </div>
+						        
 			                </form>
+			                <div class="row">
+					            <div class="col">
+					                <button type="submit" class="btn btn-primary" onclick="submitEvent()">Create</button>
+					            </div>
+					        </div>
+							<!-- Alert -->
+				            <div class="alert alert-danger" style="display:none;" id="operationAlert">
+				                <button type="button" class="close" onclick="closeAlertMessage()">&times;</button>
+				                <span></span>
+				            </div>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
+				            <br>
 			            </div>
+
 			        </div>
-			        <div class="row">
-			            <div class="col-auto mr-auto">
-			                <button type="button" class="btn btn-primary">Private</button>
-			            </div>
-			            <div class="col-auto mr-auto">
-			                <button type="button" class="btn btn-success">Public</button>
-			            </div>
-			        </div>
-			        <div class="row">
-			            <div class="col">
-			                <button type="submit" class="btn btn-primary">Create</button>
-			            </div>
-			        </div>
+			        
+			        
 			    </div>
 	      	</div>
 
