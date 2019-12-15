@@ -77,7 +77,7 @@ function wrapCallback(callback) {
         },
         onSuccess: (result) => {
             callback(null, result);
-            location.href = '../html/dashboard.html';
+            location.href = './html/myEvents.html';
         }
     };
 }

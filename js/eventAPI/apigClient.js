@@ -261,6 +261,24 @@ apigClientFactory.newClient = function (config) {
         
         return apiGatewayClient.makeRequest(joinaneventOptionsRequest, authType, additionalParams, config.apiKey);
     };
+
+
+    apigClient.recipeGet = function (params, body, additionalParams) {
+        if(additionalParams === undefined) { additionalParams = {}; }
+        
+        apiGateway.core.utils.assertParametersDefined(params, [], ['body']);
+        
+        var recipeGetRequest = {
+            verb: 'get'.toUpperCase(),
+            path: pathComponent + uritemplate('/recipe').expand(apiGateway.core.utils.parseParametersToObject(params, [])),
+            headers: apiGateway.core.utils.parseParametersToObject(params, []),
+            queryParams: apiGateway.core.utils.parseParametersToObject(params, []),
+            body: body
+        };
+        
+        
+        return apiGatewayClient.makeRequest(recipeGetRequest, authType, additionalParams, config.apiKey);
+    };
     
 
     return apigClient;
