@@ -1,7 +1,6 @@
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    accessKeyId: "AKIASFEGCKK5QOC2EHKO",
-    secretAccessKey: "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"
+
 });
 
 let cognitoUser;
