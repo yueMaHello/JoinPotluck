@@ -1,8 +1,8 @@
 
 AWS.config.region = 'us-east-1';
 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    accessKeyId: "AKIASFEGCKK5QOC2EHKO",
-    secretAccessKey: "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"
+    //
+    // delete by cz2574
 });
 
 // Initialize and add the map
@@ -13,7 +13,7 @@ function initMap() {
       document.getElementById('map'), {zoom: 13, center: center});
 
   var apigClient = apigClientFactory.newClient({
-    apiKey:'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
+    // delete by cz2574
   });
   var params = {};
   var body = {};
@@ -68,7 +68,7 @@ function joinEvent(eventID) {
   var userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
   var cognitoUser = userPool.getCurrentUser();
   var apigClient = apigClientFactory.newClient({
-    apiKey:'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
+    //delete by cz2574
   });
   var params = {};
   var body = {"EventID": eventID, "UserID": cognitoUser.username};
