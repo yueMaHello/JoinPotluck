@@ -28,7 +28,7 @@ function submitEvent() {
     var cognitoUser = userPool.getCurrentUser();
 
 	var apigClient = apigClientFactory.newClient({
-        apiKey:'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
+        //
     });
     var params = {};
     // get lat and long for the address
