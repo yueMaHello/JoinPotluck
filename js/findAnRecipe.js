@@ -38,9 +38,9 @@ function search() {
     // console.log("foodList");
     // console.log(foodList);
     var apigClient = apigClientFactory.newClient({
-        // accessKeyId: "AKIASFEGCKK5QOC2EHKO",
-        // secretAccessKey: "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"
-        // apiKey: 'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
+        //
+        //
+        // 
     });
     var params = {};
     var body = {
