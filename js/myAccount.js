@@ -32,7 +32,7 @@ $(document).ready(function() {
 
 
 	var apigClient = apigClientFactory.newClient({
-	    apiKey:'Yxfe8Gujtf5V1TCysH0Lg3I3ec95alnV8zcAqkqf'
+	    // deleted by cz2574
 	});
 	var params = {};
 	var body = {"UserID": cognitoUser.username};
